@@ -41,6 +41,28 @@ void iniciar_arreglo(char arreglo[], int n) {
     }
 }
 
+// Función que inicializa los elementos de un arreglo en orden ascendente
+void iniciar_arreglo_ascendente(char arreglo[], int n) {
+    arreglo[0] = (char)(rand() % (90 - 65 + 1) + 65);  // Primer carácter aleatorio entre 65 y 90
+    for (int i = 1; i < n; i++) {
+        if (arreglo[i - 1] + 1 > 90) {
+            arreglo[i] = arreglo[i - 1]; 
+        }
+        arreglo[i] = arreglo[i - 1] + 1;
+    }
+}
+
+// Función que inicializa los elementos de un arreglo en orden descendente
+void iniciar_arreglo_descendente(char arreglo[], int n) {
+    arreglo[0] = (char)(rand() % (90 - 65 + 1) + 65);  // Primer carácter aleatorio entre 65 y 90
+    for (int i = 1; i < n; i++) {
+        if (arreglo[i - 1] - 1 < 65) {
+            arreglo[i] = arreglo[i - 1];
+        }
+        arreglo[i] = arreglo[i - 1] - 1;
+    }
+}
+
 // Función para particionar el arreglo en base a un pivote
 // arreglo[]: El arreglo a particionar
 // p: El índice inicial del subarreglo
@@ -89,6 +111,10 @@ int main() {
     printf("Ingrese la longitud del arreglo: ");
     scanf("%d", &n);  // Leer la longitud del arreglo desde la entrada estándar
     char arreglo[n + 100];  // Declarar arreglo de tamaño n + 100
+    // Preguntar el tipo de inicialización que se debe usar
+    char tipo;
+    printf("Ingrese el tipo de inicialización: Ascendente (A), Descendente (D), Aleatorio (R): ");
+    scanf(" %c", &tipo);
 
     // Inicializa la semilla para la generación de números aleatorios
     srand(time(0)); 
@@ -99,6 +125,15 @@ int main() {
     
     // Realizar 20 pruebas para medir el tiempo de ordenación
     for (int i = 0; i < 20; i++) {
+        // Inicializar el arreglo según el tipo especificado por el usuario
+        if (tipo == 'A' || tipo == 'a') {
+            iniciar_arreglo_ascendente(arreglo, n);
+        } else if (tipo == 'D' || tipo == 'd') {
+            iniciar_arreglo_descendente(arreglo, n);
+        } else {
+            iniciar_arreglo(arreglo, n);
+        }
+
         // Inicializar el arreglo con caracteres ASCII aleatorios
         iniciar_arreglo(arreglo, n);
         // Mostrar el contenido del arreglo antes de ordenarlo
